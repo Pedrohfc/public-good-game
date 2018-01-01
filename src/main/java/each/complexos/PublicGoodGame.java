@@ -21,7 +21,7 @@ public class PublicGoodGame
         piMax = 1.0;
         r = 2.6;
         w = 0.6;
-        d = 2;
+        d = 1000;
         iterations = 800;
         g = new double[populationSize];
         gMax = new double[populationSize];
@@ -118,7 +118,7 @@ public class PublicGoodGame
                 g[i] = 0;
             }
         }
-        //System.out.println(getGMean());
+        System.out.println(getGMean());
     }
     
     public double getGMean()
@@ -139,10 +139,5 @@ public class PublicGoodGame
             update();
         }
         System.out.println("nivel de coperacao: "+getGMean());
-    }
-    
-    public static void main(String[] args)
-    {
-        new PublicGoodGame().run();
     }
 }
