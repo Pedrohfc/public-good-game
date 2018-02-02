@@ -24,35 +24,68 @@ public abstract class Graph {
 	public void run(double w, double r, double piMax, int iterations)
 	{
 		createSaveFile(w, r);
+		
+		double velocity, mean;
+		double[][] arrayStatus = new double[10][iterations];
+		double[][] arrayVelocity = new double[10][iterations];
+		
+		for (int m = 0; m <10; m++)
+		{
+			for (int i = 0; i < iterations; i++)
+			{
+				for (Node node : adjList)
+				{
+					node.payoff = 0.0;
+				}
+				
+				for (Node node : adjList)
+				{
+					node.calcPayoff(r, piMax);
+				}
+				
+				for (Node node : adjList)
+				{
+					node.calcVelocity(w);
+				}
+				
+				for (Node node : adjList)
+				{
+					node.update(piMax);
+				}
+				
+				//System.out.println(mean());
+				velocity = 0.0;
+				mean = 0.0;
+				
+				for (Node node : adjList)
+				{
+					mean += node.g;
+					velocity += node.velocity;
+				}
+				
+				arrayStatus[m][i] = mean / adjList.size();
+				arrayVelocity[m][i] = velocity / adjList.size();
+			}
+		}
+		
 		for (int i = 0; i < iterations; i++)
 		{
-			for (Node node : adjList)
+			velocity = 0.0;
+			mean = 0.0;
+
+			for (int m = 0; m <10; m++)
 			{
-				node.payoff = 0.0;
+				mean += arrayStatus[m][i];
+				velocity += arrayVelocity[m][i];
 			}
 			
-			for (Node node : adjList)
-			{
-				node.calcPayoff(r, piMax);
-			}
-			
-			for (Node node : adjList)
-			{
-				node.calcVelocity(w);
-			}
-			
-			for (Node node : adjList)
-			{
-				node.update(piMax);
-			}
-			
-			System.out.println(mean());
-			saveIteration(i);
+			String status = i+";"+mean/10+";"+velocity/10;
+			writerCSV.println(status);
 		}
 		writerCSV.close();
 	}
 	
-	public double mean()
+/*	public double mean()
 	{
 		double mean = 0.0;
 		for (Node node : adjList)
@@ -62,7 +95,7 @@ public abstract class Graph {
 		
 		return mean / adjList.size();
 	}
-	
+*/	
 	private void createSaveFile(double w, double r)
 	{
 		String fileName = outputDir+"/simu-w"+w+"-r"+r+"-d"+d;
@@ -87,16 +120,18 @@ public abstract class Graph {
 		}
 	}
 	
-	private void saveIteration(int i)
+/*	private void saveIteration(int i)
 	{
-		String status = i+";"+mean()+";";
-		double velocity = 0.0;
-		for (Node node : adjList)
+		for (int m = 0; m <10; m++)
 		{
 			velocity += node.velocity;
 		}
+		String status = i+";"+mean()+";";
+		double velocity = 0.0;
+		
 		velocity /= adjList.size();
 		status = status + velocity;
 		writerCSV.println(status);
 	}
+*/
 }

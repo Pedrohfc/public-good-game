@@ -7,7 +7,13 @@ public class App
 {
     public static void main( String[] args )
     {
-        Graph network = new NearestNeighborNetwork(10000, 2);
-        network.run(0.6, 2.6, 1.0, 800);
+        int D = 2;
+        while (D<129){ 
+            Graph network = new NearestNeighborNetwork(10000, D);
+            network.run(0.05, 2.2, 1.0, 1000);
+            network.run(0.6, 2.6, 1.0, 1000);
+            network.run(0.95, 4.8, 1.0, 1000);
+            D= D*4;
+        }
     }
 }
