@@ -15,7 +15,7 @@ public abstract class Graph {
 	{
 		adjList = new ArrayList<>();
 		initGraph(size, d);
-		outputDir = "resources";
+		outputDir = "charts";
 		this.d = d;
 	}
 	
@@ -31,6 +31,11 @@ public abstract class Graph {
 		
 		for (int m = 0; m <10; m++)
 		{
+			for (Node node : adjList)
+			{
+				node.setInitParams();
+			}
+			
 			for (int i = 0; i < iterations; i++)
 			{
 				for (Node node : adjList)

@@ -10,16 +10,21 @@ public class Node {
 	public Node()
 	{
 		neighborhood = new ArrayList<>();
-		g = Math.random(); // Aposta inicial aleatoria
-		gMax = g;
-		payoffMax = -1.0 * Double.MAX_VALUE;
-		velocity = 0;
-		payoff = 0;
+		setInitParams();
 	}
 	
 	public void addNeighbor(Node neighbor)
 	{
 		neighborhood.add(neighbor);
+	}
+	
+	public void setInitParams()
+	{
+		g = Math.random(); // Aposta inicial aleatoria
+		gMax = g;
+		payoffMax = -1.0 * Double.MAX_VALUE;
+		velocity = 0;
+		payoff = 0;
 	}
 	
 	/***
